@@ -5,6 +5,7 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 include 'db.php';
+include 'config.php';
 
 // Fetch all appointments with service names
 $sql = "SELECT a.id, a.name, s.service_name, a.date, a.time 
@@ -517,7 +518,10 @@ if (!$result) {
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
   // ========== Socket.IO Connection ==========
-  const socket = io('http://localhost:3001', { 
+  // Production: Set REALTIME_SERVER_URL environment variable
+  // Local development: Falls back to localhost:3001
+  const REALTIME_SERVER_URL = '<?php echo REALTIME_SERVER_URL; ?>';
+  const socket = io(REALTIME_SERVER_URL, {
     transports: ['websocket'],
     reconnection: true,
     reconnectionDelay: 1000,
@@ -731,7 +735,7 @@ if (!$result) {
 
     try {
       if (!vapidPublicKey) {
-        const keyResponse = await fetch('http://localhost:3001/vapid-public-key');
+        const keyResponse = await fetch(REALTIME_SERVER_URL + '/vapid-public-key');
         const keyData = await keyResponse.json();
         vapidPublicKey = keyData.publicKey;
       }

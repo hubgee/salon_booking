@@ -6,8 +6,9 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
-
 require_once 'db.php';
+require_once 'config.php';
+
 
 $name    = $_POST['name'] ?? '';
 $service_id = $_POST['service'] ?? null;
@@ -120,7 +121,7 @@ if ($stmt->execute()) {
     
     // Notify Node.js server
     function notify_node($event, $data, $target = 'admin') {
-        $url = 'http://localhost:3001/notify';
+        $url = REALTIME_SERVER_URL . '/notify';
         $payload = json_encode([
             'token' => 'change-this-token',
             'event' => $event,
@@ -142,7 +143,7 @@ if ($stmt->execute()) {
 
     // Send push notifications
     function send_push_notification($booking_data, $unread_count) {
-        $url = 'http://localhost:3001/send-push';
+        $url = REALTIME_SERVER_URL . '/send-push';
         $payload = json_encode([
             'token' => 'change-this-token',
             'bookingData' => $booking_data,

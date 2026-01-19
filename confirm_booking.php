@@ -3,6 +3,7 @@
 
 // Include database connection
 require_once 'db.php';
+require_once 'config.php';
 
 // Get booking ID from request
 $id = $_GET['id'] ?? null;
@@ -20,7 +21,7 @@ if ($id && is_numeric($id)) {
 
         // ---- Notify Node.js server ----
         function notify_node($event, $data, $target = 'admin') {
-            $url = 'http://localhost:3001/notify'; // Node server endpoint
+            $url = REALTIME_SERVER_URL . '/notify'; // Node server endpoint
             $payload = json_encode([
                 'token' => 'change-this-token', // must match AUTH_TOKEN in server.js
                 'event' => $event,

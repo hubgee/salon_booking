@@ -1,0 +1,6 @@
+# Nixpacks configuration for Railway PHP deployment
+[phases.setup]
+nixPkgs = ["php82", "php82Extensions.mysqli", "php82Extensions.pdo_mysql"]
+
+[start]
+cmd = "php -S 0.0.0.0:${PORT:-8080} -t ."
