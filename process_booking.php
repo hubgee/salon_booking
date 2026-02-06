@@ -123,7 +123,7 @@ if ($stmt->execute()) {
     function notify_node($event, $data, $target = 'admin') {
         $url = REALTIME_SERVER_URL . '/notify';
         $payload = json_encode([
-            'token' => 'change-this-token',
+            'token' => NOTIFY_TOKEN,
             'event' => $event,
             'data'  => $data,
             'target'=> $target
@@ -145,7 +145,7 @@ if ($stmt->execute()) {
     function send_push_notification($booking_data, $unread_count) {
         $url = REALTIME_SERVER_URL . '/send-push';
         $payload = json_encode([
-            'token' => 'change-this-token',
+            'token' => NOTIFY_TOKEN,
             'bookingData' => $booking_data,
             'unreadCount' => $unread_count
         ]);
